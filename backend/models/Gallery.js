@@ -1,30 +1,24 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/db');
 
-const User = sequelize.define('User', {
+const Gallery = sequelize.define('Gallery', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-    validate: { isEmail: true },
-  },
-  password: {
+  imageUrl: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  role: {
-    type: DataTypes.ENUM('client', 'admin'),
-    defaultValue: 'client',
+  isPublic: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
 });
 
-module.exports = User;
+module.exports = Gallery;
