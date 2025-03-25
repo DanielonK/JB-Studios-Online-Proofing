@@ -4,15 +4,19 @@ const sequelize = require('../utils/db');
 const Gallery = sequelize.define('Gallery', {
   title: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   imageUrl: {
     type: DataTypes.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 }, {
   tableName: 'galleries', // ✅ Explicitly setting the correct table name
-  timestamps: true,  // ✅ Automatically adds createdAt & updatedAt fields
+  timestamps: true,       // ✅ Automatically adds createdAt & updatedAt fields
 });
 
 module.exports = Gallery;
