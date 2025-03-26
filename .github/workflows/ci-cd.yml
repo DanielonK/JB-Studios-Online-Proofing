@@ -12,13 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # ✅ Use Node.js 20 to match the required engine for react-router v7.4.0
+      # ✅ Set up Node.js 20 for compatibility with your project dependencies
       - name: Setup Node.js Environment
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # ✅ Frontend build with permission fix for react-scripts
+      # ✅ Build the frontend
       - name: Install Frontend Dependencies and Build
         run: |
           cd frontend
@@ -26,11 +26,14 @@ jobs:
           chmod +x ./node_modules/.bin/react-scripts
           npm run build
 
+      # ✅ Install backend dependencies
       - name: Install Backend Dependencies
         run: |
           cd backend
           npm install
+          chmod +x ./node_modules/.bin/jest  # Fix Jest permission issue
 
+      # ✅ Run backend tests
       - name: Run Backend Tests
         run: |
           cd backend
