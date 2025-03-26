@@ -45,6 +45,12 @@ jobs:
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
+      - name: Clean and Reinstall Backend Dependencies for Heroku
+        run: |
+          cd backend
+          rm -rf node_modules package-lock.json
+          npm install --omit=dev
+
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
