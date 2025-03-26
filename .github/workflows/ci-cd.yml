@@ -12,13 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # ✅ Match node version for frontend dependencies
       - name: Setup Node.js Environment
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # ✅ Install frontend dependencies and build
       - name: Install Frontend Dependencies and Build
         run: |
           cd frontend
@@ -26,13 +24,11 @@ jobs:
           chmod +x ./node_modules/.bin/react-scripts
           npm run build
 
-      # ✅ Install backend dependencies
       - name: Install Backend Dependencies
         run: |
           cd backend
           npm install
 
-      # ✅ Run backend tests with Jest (with permission fix)
       - name: Run Backend Tests
         run: |
           cd backend
@@ -45,6 +41,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
@@ -52,4 +52,4 @@ jobs:
           heroku_app_name: "jb-studios-app"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
         env:
-          HD_FORCE_CLI_INSTALL: true  # ✅ Ensures Heroku CLI is installed
+          HD_FORCE_CLI_INSTALL: true
