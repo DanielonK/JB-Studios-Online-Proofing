@@ -51,5 +51,6 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "jb-studios-app"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          appdir: "backend"
         env:
           HD_FORCE_CLI_INSTALL: true
