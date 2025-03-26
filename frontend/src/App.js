@@ -1,22 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar"; // Import the Navbar
+import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import GalleryPage from "./pages/GalleryPage";
 import BookingPage from "./pages/BookingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import AdminDashboard from "./pages/AdminDashboard"; // ✅ Import Admin Dashboard
-import PrivateRoute from "./components/PrivateRoute"; // ✅ Ensure only admins access it
+import AdminDashboard from "./pages/AdminDashboard";
+import PrivateRoute from "./components/PrivateRoute";
+import CategoryGalleryPage from "./pages/CategoryGalleryPage"; // ✅ Dynamic category page
 
-// Import Tailwind CSS
 import "./index.css";
 
 function App() {
   return (
     <Router>
-      <Navbar /> {/* ✅ Navbar is now included at the top */}
-      <div className="pt-16"> {/* This ensures content is not hidden behind the navbar */}
+      <Navbar />
+      <div className="pt-16">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
@@ -33,6 +33,9 @@ function App() {
           <Route path="/education" element={<div>Education Page</div>} />
           <Route path="/shop" element={<div>Shop Page</div>} />
           <Route path="/bio" element={<div>Bio Page</div>} />
+
+          {/* ✅ Dynamic Route for Section/Category */}
+          <Route path="/:section/:category" element={<CategoryGalleryPage />} />
 
           {/* ✅ Protected Admin Route */}
           <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
