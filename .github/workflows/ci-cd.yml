@@ -12,13 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # ✅ Set up Node.js 20 for compatibility with your project dependencies
+      # ✅ Match node version for frontend dependencies
       - name: Setup Node.js Environment
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # ✅ Build the frontend
+      # ✅ Install frontend dependencies and build
       - name: Install Frontend Dependencies and Build
         run: |
           cd frontend
@@ -31,12 +31,12 @@ jobs:
         run: |
           cd backend
           npm install
-          chmod +x ./node_modules/.bin/jest  # Fix Jest permission issue
 
-      # ✅ Run backend tests
+      # ✅ Run backend tests with Jest (with permission fix)
       - name: Run Backend Tests
         run: |
           cd backend
+          chmod +x ./node_modules/.bin/jest
           npm test
 
   deploy:
@@ -51,3 +51,5 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "jb-studios-app"
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+        env:
+          HD_FORCE_CLI_INSTALL: true  # ✅ Ensures Heroku CLI is installed
