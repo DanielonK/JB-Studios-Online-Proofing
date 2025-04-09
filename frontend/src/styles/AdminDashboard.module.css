@@ -1,0 +1,191 @@
+/* Admin Dashboard - Dark Elegant Style */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+  background-color: black;
+  color: white;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #111827; /* dark gray */
+  padding: 20px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.4);
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #A855F7; /* purple */
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar ul li button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+  transition: color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.sidebar ul li button:hover {
+  color: #A855F7;
+  transform: translateX(5px);
+}
+
+/* Main Content */
+.mainContent {
+  flex: 1;
+  background: black;
+  padding: 40px;
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Cards */
+.card {
+  background: #1f2937;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2); /* purple glow */
+  margin-bottom: 40px;
+  animation: slide-up 0.5s ease-in-out;
+}
+
+.card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #A855F7;
+}
+
+/* Form Inputs */
+.textbox {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background: #374151;
+  color: white;
+  border: 1px solid #4B5563;
+  font-size: 1rem;
+}
+
+.textbox::placeholder {
+  color: #9CA3AF;
+}
+
+/* Select Dropdown */
+.selectWrapper label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #d1d5db;
+}
+
+.selectWrapper select {
+  width: 100%;
+  padding: 12px;
+  background: #374151;
+  border-radius: 8px;
+  border: 1px solid #4B5563;
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Upload Button */
+.button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #6D28D9;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  margin-top: 1rem;
+}
+
+.button:hover {
+  background: #5B21B6;
+}
+
+/* Preview Media */
+img, video {
+  max-width: 100%;
+  margin-top: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Upload Progress Bar */
+.progress-bar {
+  width: 100%;
+  background-color: #374151;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.progress-fill {
+  height: 12px;
+  background-color: #A855F7;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+  .mainContent {
+    padding: 20px;
+  }
+}
+

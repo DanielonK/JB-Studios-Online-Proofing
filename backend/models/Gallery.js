@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/db');
-const Category = require('./Category'); // ✅ Import Category model
+const Category = require('./Category');
 
 const Gallery = sequelize.define('Gallery', {
   title: {
@@ -11,24 +11,32 @@ const Gallery = sequelize.define('Gallery', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  section: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  mediaType: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "image",
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   categoryId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: 'Categories',
       key: 'id',
     },
   },
-  section: {
-    type: DataTypes.STRING,
-    allowNull: false, // ✅ Ensure each image is tagged with a section (Photography, Shop, etc.)
-  }
 }, {
   tableName: 'galleries',
   timestamps: true,
 });
 
-// ✅ Define associations
 Gallery.belongsTo(Category, { foreignKey: 'categoryId', onDelete: 'CASCADE' });
 Category.hasMany(Gallery, { foreignKey: 'categoryId' });
 

@@ -32,23 +32,24 @@
 }
 
 .btn-primary {
-    background-color: #1E40AF; /* Blue-600 */
+    background-color: #6D28D9;
+    /* JB Purple */
     color: white;
     border: none;
 }
 
 .btn-primary:hover {
-    background-color: #1D4ED8; /* Blue-700 */
+    background-color: #5B21B6;
 }
 
 .btn-secondary {
-    background-color: #047857; /* Green-600 */
+    background-color: #047857;
     color: white;
     border: none;
 }
 
 .btn-secondary:hover {
-    background-color: #065F46; /* Green-700 */
+    background-color: #065F46;
 }
 
 /* Navigation Link Styles */
@@ -58,11 +59,13 @@
 }
 
 .nav-link:hover {
-    color: #FFD700; /* Gold color for hover effect */
+    color: #A855F7;
+    /* Purple hover effect */
 }
 
 /* Global Styles */
-html, body {
+html,
+body {
     background-color: black;
     color: white;
     margin: 0;
@@ -77,7 +80,8 @@ a {
 }
 
 a:hover {
-    color: #9CA3AF; /* Gray-400 */
+    color: #9CA3AF;
+    /* Gray-400 */
 }
 
 /* Container */
@@ -88,40 +92,45 @@ a:hover {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0 0 1rem 0;
     font-weight: 700;
-    letter-spacing: 0.05em; /* Add letter spacing */
+    letter-spacing: 0.05em;
 }
 
 h1 {
-    font-size: 2.25rem; /* 36px */
+    font-size: 2.25rem;
 }
 
 h2 {
-    font-size: 2rem; /* 32px */
+    font-size: 2rem;
 }
 
 h3 {
-    font-size: 1.75rem; /* 28px */
+    font-size: 1.75rem;
 }
 
 h4 {
-    font-size: 1.5rem; /* 24px */
+    font-size: 1.5rem;
 }
 
 h5 {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.25rem;
 }
 
 h6 {
-    font-size: 1rem; /* 16px */
+    font-size: 1rem;
 }
 
 p {
     margin: 0 0 1rem 0;
-    font-size: 1rem; /* 16px */
-    letter-spacing: 0.025em; /* Add letter spacing */
+    font-size: 1rem;
+    letter-spacing: 0.025em;
 }
 
 /* Utility Classes */
@@ -210,33 +219,33 @@ p {
 }
 
 .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 /* Admin Dashboard Styles */
 .bg-gray-800 {
-    background-color: #2D3748; /* Gray-800 */
+    background-color: #2D3748;
 }
 
 .bg-gray-700 {
-    background-color: #4A5568; /* Gray-700 */
+    background-color: #4A5568;
 }
 
 .text-white {
-    color: #FFFFFF; /* White */
+    color: #FFFFFF;
 }
 
 .text-gray-400 {
-    color: #A0AEC0; /* Gray-400 */
+    color: #A0AEC0;
 }
 
 .text-gray-600 {
-    color: #718096; /* Gray-600 */
+    color: #718096;
 }
 
 .text-gray-800 {
-    color: #2D3748; /* Gray-800 */
+    color: #2D3748;
 }
 
 .rounded-lg {
@@ -252,16 +261,16 @@ p {
 }
 
 .hover\:bg-blue-700:hover {
-    background-color: #1D4ED8; /* Blue-700 */
+    background-color: #6D28D9;
 }
 
 .hover\:bg-green-700:hover {
-    background-color: #065F46; /* Green-700 */
+    background-color: #065F46;
 }
 
 /* Home Page Styles */
 .bg-black {
-    background-color: black; /* Black */
+    background-color: black;
 }
 
 .text-base {
@@ -280,34 +289,47 @@ p {
     letter-spacing: 0.025em;
 }
 
+.dropdown-link {
+    padding: 0.5rem 1rem;
+    display: block;
+    color: white;
+    transition: color 0.3s ease-in-out;
+}
+
+.dropdown-link:hover {
+    color: #a855f7;
+    /* Tailwind purple-500 */
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     h1 {
-        font-size: 1.75rem; /* 28px */
+        font-size: 1.75rem;
     }
 
     h2 {
-        font-size: 1.5rem; /* 24px */
+        font-size: 1.5rem;
     }
 
     h3 {
-        font-size: 1.25rem; /* 20px */
+        font-size: 1.25rem;
     }
 
     h4 {
-        font-size: 1.125rem; /* 18px */
+        font-size: 1.125rem;
     }
 
     h5 {
-        font-size: 1rem; /* 16px */
+        font-size: 1rem;
     }
 
     h6 {
-        font-size: 0.875rem; /* 14px */
+        font-size: 0.875rem;
     }
 
     p {
-        font-size: 0.875rem; /* 14px */
+        font-size: 0.875rem;
     }
 
     .btn {
@@ -325,6 +347,54 @@ p {
     }
 
     .h-64 {
-        height: 12rem; /* Adjust height for smaller screens */
+        height: 12rem;
     }
 }
+.fade-in-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+  
+  .fade-in-on-scroll.appear {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.4s ease-out forwards;
+  }
+  @keyframes slide-up-down {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-slide-up-down {
+    animation: slide-up-down 0.4s ease-out forwards;
+  }
+  

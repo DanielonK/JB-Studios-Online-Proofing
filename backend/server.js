@@ -1,43 +1,41 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const path = require('path'); // ✅ For serving static files
-const sequelize = require('./utils/db'); // ✅ Sequelize DB connection
+const path = require('path');
+const sequelize = require('./utils/db');
 
-// ✅ Load environment variables
 dotenv.config();
 
-// ✅ Initialize express app
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ Serve static images (from /uploads)
+// Static folder for uploaded media
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ✅ Import routes
+// Import routes
 const userRoutes = require('./routes/userRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const galleryRoutes = require('./routes/galleryRoutes');
-const categoryRoutes = require('./routes/categoryRoutes'); // ✅ Make sure this file ends with module.exports = router
+const categoryRoutes = require('./routes/categoryRoutes');
+const filmRoutes = require('./routes/filmRoutes');
 
-// ✅ Use routes
+// Mount routes
 app.use('/api/users', userRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/films', filmRoutes);
 
-// ✅ Root route test
+// Test route
 app.get('/', (req, res) => {
   res.send('JB Studios API Running!');
 });
 
-// ✅ Sync Sequelize models
+// Sync database
 sequelize.sync({ force: false })
-  .then(() => console.log('✅ Database & tables created!'))
-  .catch(error => console.error('❌ Sequelize sync error:', error));
+  .then(() => console.log('✅ Database & tables synced'))
+  .catch((error) => console.error('❌ Sequelize sync error:', error));
 
-// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

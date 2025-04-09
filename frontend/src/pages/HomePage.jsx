@@ -1,11 +1,11 @@
+/** GLOBAL.CSS is already configured to support the purple color scheme and styles **/
+
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Footer from "../components/Footer";
 
-const CategoryGalleryPage = () => {
-  const { section, category } = useParams();
+const HomePage = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const scrollRef = useRef(null);
@@ -14,21 +14,15 @@ const CategoryGalleryPage = () => {
     const fetchImages = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/gallery");
-        const filtered = res.data.filter(
-          (img) =>
-            img.Category?.name.toLowerCase() === category &&
-            img.Category?.section.toLowerCase() === section
-        );
-        setImages(filtered);
+        setImages(res.data);
       } catch (error) {
-        console.error("Failed to fetch images", error);
+        console.error("Failed to load gallery:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchImages();
-  }, [section, category]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,7 +36,6 @@ const CategoryGalleryPage = () => {
         }
       }
     }, 3000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -58,23 +51,20 @@ const CategoryGalleryPage = () => {
     }
   };
 
-  const capitalize = (text) =>
-    text.charAt(0).toUpperCase() + text.slice(1).replace("-", " ");
-
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-black via-zinc-900 to-black text-white">
       <div className="w-full py-10 px-4 md:px-8">
         <h1 className="text-4xl md:text-6xl font-black text-center mb-3 tracking-tight leading-tight">
-          {capitalize(category)}
+          Welcome to <span className="text-purple-400">JBS Studios</span>
         </h1>
         <p className="text-center text-base md:text-lg text-zinc-300 tracking-wide">
-          Gallery from section: <span className="uppercase text-purple-500">{section.replace("-", " ")}</span>
+          Photography bookings & proofing gallery made seamless.
         </p>
 
         {loading ? (
-          <p className="text-center mt-10">Loading...</p>
+          <p className="text-center">Loading...</p>
         ) : images.length === 0 ? (
-          <p className="text-center mt-10">No images found in this category.</p>
+          <p className="text-center">No images found in the gallery.</p>
         ) : (
           <div className="relative w-full h-[60vh] md:h-[80vh] lg:h-[90vh] mt-6">
             <button
@@ -104,7 +94,7 @@ const CategoryGalleryPage = () => {
                     alt={img.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute bottom-6 left-6 z-10 text-white text-lg font-semibold backdrop-blur-sm px-4 py-2 bg-black/30 rounded">
+                  <div className="absolute bottom-6 left-6 z-10 text-white text-base md:text-lg font-semibold backdrop-blur-sm px-4 py-2 bg-black/40 rounded shadow-md">
                     {img.title}
                   </div>
                 </div>
@@ -119,4 +109,4 @@ const CategoryGalleryPage = () => {
   );
 };
 
-export default CategoryGalleryPage;
+export default HomePage;

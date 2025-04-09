@@ -3,37 +3,3 @@
 @tailwind utilities;
 
 @import './styles/global.css';
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    border-radius: 5px;
-    transition: 0.3s;
-  }
-  
-  .btn-primary {
-    background-color: #1d4ed8;
-    color: white;
-  }
-  
-  .btn-primary:hover {
-    background-color: #1e40af;
-  }
-  
-  .btn-secondary {
-    background-color: #16a34a;
-    color: white;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #15803d;
-  }
-  .slick-slide[aria-hidden="true"] {
-    display: none !important; /* ✅ Ensures hidden slides don’t interfere */
-  }
-  
-  .slick-slide *:focus {
-    outline: none !important; /* ✅ Prevents focus from getting trapped */
-  }

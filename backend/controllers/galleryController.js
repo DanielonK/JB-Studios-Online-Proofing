@@ -1,61 +1,110 @@
-const Gallery = require('../models/Gallery');
-const Category = require('../models/Category');
+const { Op } = require('sequelize');
 const path = require('path');
 const multer = require('multer');
+const Gallery = require('../models/Gallery');
+const Category = require('../models/Category');
 
-// ✅ Multer config for image uploads
+// ✅ Multer config for images/videos
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, 'uploads/'); // Save files to uploads/
   },
   filename: (req, file, cb) => {
-    const uniqueName = Date.now() + path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueName);
+    const uniqueName = `media-${Date.now()}${path.extname(file.originalname)}`;
+    cb(null, uniqueName);
   },
 });
 
-const upload = multer({ storage });
+// ✅ Accept images and videos + limit file size (500MB) + better fileFilter
+const upload = multer({
+  storage,
+  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB
+  fileFilter: (req, file, cb) => {
+    const allowedMimeTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/gif",
+      "video/mp4",
+      "video/quicktime",   // MOV files
+      "video/x-msvideo"    // AVI files
+    ];
+    const allowedExtensions = [".jpeg", ".jpg", ".png", ".gif", ".mp4", ".mov", ".avi"];
 
-// ✅ Upload an image with title and categoryId
+    const mimetypeAllowed = allowedMimeTypes.includes(file.mimetype);
+    const extnameAllowed = allowedExtensions.includes(path.extname(file.originalname).toLowerCase());
+
+    if (mimetypeAllowed && extnameAllowed) {
+      return cb(null, true);
+    } else {
+      return cb(new Error('Only image and video files (jpg, png, gif, mp4, mov, avi) are allowed.'));
+    }
+  }
+});
+
+exports.upload = upload;
+
+// ✅ Upload new media (image or video)
 exports.uploadImage = async (req, res) => {
+  console.log("📥 Received file:", req.file);
+  console.log("📥 Received body:", req.body);
+
   try {
-    const { title, categoryId, section } = req.body;
+    const { title, section, mediaType, categoryId } = req.body;
+
+    if (!title || !section || !req.file) {
+      return res.status(400).json({ error: "Missing title, section, or file." });
+    }
+
     const imageUrl = `/uploads/${req.file.filename}`;
 
-    const newImage = await Gallery.create({
+    const newMedia = await Gallery.create({
       title,
       imageUrl,
-      categoryId,
-      section, // ✅ This is what fixes the error
+      section,
+      mediaType: mediaType || "image", // If frontend doesn't send it, fallback to "image"
+      categoryId: categoryId || null,  // Optional
     });
 
-    res.status(201).json(newImage);
+    res.status(201).json(newMedia);
   } catch (error) {
-    console.error("Upload error:", error);
-    res.status(500).json({ error: "Failed to upload image" });
+    console.error("❌ Upload error:", error);
+    res.status(500).json({ error: "Failed to upload media" });
   }
 };
 
-// ✅ Get all gallery images including category info
+// ✅ Get gallery (images/videos) with optional section filtering
 exports.getGalleryImages = async (req, res) => {
   try {
-    const images = await Gallery.findAll({
-      include: {
-        model: Category,
-        attributes: ['name', 'section'],
-      },
+    const where = {};
+
+    if (req.query.section) {
+      where.section = req.query.section;
+    }
+
+    const media = await Gallery.findAll({
+      where,
+      include: [
+        {
+          model: Category,
+          attributes: ['id', 'name', 'section'],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
     });
 
-    res.json(images);
+    res.json(media);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch gallery images' });
+    console.error("❌ Fetch gallery error:", error);
+    res.status(500).json({ error: "Failed to fetch gallery media" });
   }
 };
 
-// ✅ Get all unique categories for dropdown (admin form or frontend filters)
+// ✅ Get all categories (optionally filtered by section)
 exports.getCategories = async (req, res) => {
   try {
     const where = {};
+
     if (req.query.section) {
       where.section = req.query.section;
     }
@@ -68,9 +117,7 @@ exports.getCategories = async (req, res) => {
 
     res.json(categories);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch categories' });
+    console.error("❌ Fetch categories error:", error);
+    res.status(500).json({ error: "Failed to fetch categories" });
   }
 };
-
-// ✅ Export multer for use in routes
-exports.upload = upload;
